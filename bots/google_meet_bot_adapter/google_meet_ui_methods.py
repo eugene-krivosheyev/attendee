@@ -165,6 +165,59 @@ class GoogleMeetUIMethods:
             condition=EC.presence_of_element_located((By.CSS_SELECTOR, MORE_OPTIONS_BUTTON_SELECTOR)),
             wait_time_seconds=6,
         )
+
+
+        logger.info("Setting captions language for RU...")
+        logger.info("Clicking the more options button...")
+        self.click_element(more_options_button, "more_options_button")
+
+        logger.info("Waiting for the 'Settings' list item...")
+        change_layout_list_item_settings = self.locate_element(
+            step="change_layout_list_item_settings",
+            condition=EC.presence_of_element_located((By.XPATH, '//li[.//span[text()="Settings"]]')),
+            wait_time_seconds=10,
+        )
+
+        logger.info("Clicking the settings button...")
+        self.click_element(change_layout_list_item_settings, "more_options_button_settings")
+
+        logger.info("Waiting for the 'Captions' label element")
+        self.locate_element(
+            step="settings_label",
+            condition=EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Captions"]')),
+            wait_time_seconds=10,
+        )
+
+        logger.info("Find for the 'Captions' label element")
+        captions_button = self.find_element_by_selector(By.CSS_SELECTOR, 'button[aria-label="Captions"]')
+
+        logger.info("Clicking the Captions button...")
+        self.click_element(captions_button, "more_options_button_captions_click")
+
+        result_set_lang = self.driver.execute_script("""
+            var element = document.querySelector('li[data-value="ru-RU"]');
+            if (element) {
+                element.click();
+                return 'Language RU set';
+            } else {
+                return 'Language RU not set';
+            }
+            return $();
+        """)
+        logger.info(result_set_lang)
+
+        logger.info("Waiting for the close button")
+        close_button_settings = self.locate_element(
+            step="close_button",
+            condition=EC.presence_of_element_located((By.CSS_SELECTOR, 'button[aria-label="Close dialog"]')),
+            wait_time_seconds=6,
+        )
+
+        logger.info("Clicking the close button")
+        self.click_element(close_button_settings, "close_button")
+
+
+
         logger.info("Clicking the more options button...")
         self.click_element(more_options_button, "more_options_button")
 
