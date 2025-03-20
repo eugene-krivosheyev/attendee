@@ -6,13 +6,13 @@ import boto3
 
 
 class FileUploader:
-    def __init__(self, bucket, key):
+    def __init__(self, bucket, key, endpoint_url=None):
         """Initialize the FileUploader with an S3 bucket name.
 
         Args:
             bucket (str): The name of the S3 bucket to upload to
         """
-        self.s3_client = boto3.client("s3")
+        self.s3_client = boto3.client("s3", endpoint_url=endpoint_url)
         self.bucket = bucket
         self.key = key
         self._upload_thread = None
